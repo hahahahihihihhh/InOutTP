@@ -3,77 +3,198 @@
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
         <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="部门名称" prop="deptName">
-              <el-input v-model="queryParams.deptName" placeholder="请输入部门名称" clearable @keyup.enter="handleQuery" />
+          <el-form ref="queryFormRef" :model="queryParams" :inline="true" label-width="auto">
+            <el-form-item label="数据集名称" prop="deptName">
+              <el-select v-model="queryParams.deptName" placeholder="请选择数据集" clearable @change="handleQuery">
+                <el-option label="TDRIVE" value="TDRIVE" />
+                <el-option label="NYCTAXI" value="NYCTAXI" />
+              </el-select>
             </el-form-item>
-            <el-form-item label="类别编码" prop="deptCategory">
-              <el-input v-model="queryParams.deptCategory" placeholder="请输入类别编码" clearable style="width: 240px" @keyup.enter="handleQuery" />
+            <el-form-item label="模型名称" prop="deptCategory">
+              <el-select v-model="queryParams.deptCategory" placeholder="请选择模型" clearable @change="handleQuery">
+                <el-option label="MCK-GNN" value="mck-gnn" />
+                <el-option label="MK-GNN" value="mk-gnn" />
+              </el-select>
             </el-form-item>
-            <el-form-item label="状态" prop="status">
-              <el-select v-model="queryParams.status" placeholder="部门状态" clearable>
-                <el-option v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label" :value="dict.value" />
+            <el-form-item label="未来时间" prop="status">
+              <el-select v-model="queryParams.status" placeholder="请选择时间" clearable @change="handleQuery" style="width: 200px">
+                <el-option label="2015-07-01 00:00" value="20150401_00" />
+                <el-option label="2015-07-01 01:00" value="20150401_01" />
+                <el-option label="2015-07-01 02:00" value="20150401_02" />
+                <el-option label="2015-07-01 03:00" value="20150401_03" />
+                <el-option label="2015-07-01 04:00" value="20150401_04" />
+                <el-option label="2015-07-01 05:00" value="20150401_05" />
+                <el-option label="2015-07-01 06:00" value="20150401_06" />
+                <el-option label="2015-07-01 07:00" value="20150401_07" />
+                <el-option label="2015-07-01 08:00" value="20150401_08" />
+                <el-option label="2015-07-01 09:00" value="20150401_09" />
+                <el-option label="2015-07-01 10:00" value="20150401_10" />
+                <el-option label="2015-07-01 11:00" value="20150401_11" />
+                <el-option label="2015-07-01 12:00" value="20150401_12" />
+                <el-option label="2015-07-01 13:00" value="20150401_13" />
+                <el-option label="2015-07-01 14:00" value="20150401_14" />
+                <el-option label="2015-07-01 15:00" value="20150401_15" />
+                <el-option label="2015-07-01 16:00" value="20150401_16" />
+                <el-option label="2015-07-01 17:00" value="20150401_17" />
+                <el-option label="2015-07-01 18:00" value="20150401_18" />
+                <el-option label="2015-07-01 19:00" value="20150401_19" />
+                <el-option label="2015-07-01 20:00" value="20150401_20" />
+                <el-option label="2015-07-01 21:00" value="20150401_21" />
+                <el-option label="2015-07-01 22:00" value="20150401_22" />
+                <el-option label="2015-07-01 23:00" value="20150401_23" />
+                <el-option label="2015-07-02 00:00" value="20150402_00" />
+                <el-option label="2015-07-02 01:00" value="20150402_01" />
+                <el-option label="2015-07-02 02:00" value="20150402_02" />
+                <el-option label="2015-07-02 03:00" value="20150402_03" />
+                <el-option label="2015-07-02 04:00" value="20150402_04" />
+                <el-option label="2015-07-02 05:00" value="20150402_05" />
+                <el-option label="2015-07-02 06:00" value="20150402_06" />
+                <el-option label="2015-07-02 07:00" value="20150402_07" />
+                <el-option label="2015-07-02 08:00" value="20150402_08" />
+                <el-option label="2015-07-02 09:00" value="20150402_09" />
+                <el-option label="2015-07-02 10:00" value="20150402_10" />
+                <el-option label="2015-07-02 11:00" value="20150402_11" />
+                <el-option label="2015-07-02 12:00" value="20150402_12" />
+                <el-option label="2015-07-02 13:00" value="20150402_13" />
+                <el-option label="2015-07-02 14:00" value="20150402_14" />
+                <el-option label="2015-07-02 15:00" value="20150402_15" />
+                <el-option label="2015-07-02 16:00" value="20150402_16" />
+                <el-option label="2015-07-02 17:00" value="20150402_17" />
+                <el-option label="2015-07-02 18:00" value="20150402_18" />
+                <el-option label="2015-07-02 19:00" value="20150402_19" />
+                <el-option label="2015-07-02 20:00" value="20150402_20" />
+                <el-option label="2015-07-02 21:00" value="20150402_21" />
+                <el-option label="2015-07-02 22:00" value="20150402_22" />
+                <el-option label="2015-07-02 23:00" value="20150402_23" />
+                <el-option label="2015-07-03 00:00" value="20150403_00" />
+                <el-option label="2015-07-03 01:00" value="20150403_01" />
+                <el-option label="2015-07-03 02:00" value="20150403_02" />
+                <el-option label="2015-07-03 03:00" value="20150403_03" />
+                <el-option label="2015-07-03 04:00" value="20150403_04" />
+                <el-option label="2015-07-03 05:00" value="20150403_05" />
+                <el-option label="2015-07-03 06:00" value="20150403_06" />
+                <el-option label="2015-07-03 07:00" value="20150403_07" />
+                <el-option label="2015-07-03 08:00" value="20150403_08" />
+                <el-option label="2015-07-03 09:00" value="20150403_09" />
+                <el-option label="2015-07-03 10:00" value="20150403_10" />
+                <el-option label="2015-07-03 11:00" value="20150403_11" />
+                <el-option label="2015-07-03 12:00" value="20150403_12" />
+                <el-option label="2015-07-03 13:00" value="20150403_13" />
+                <el-option label="2015-07-03 14:00" value="20150403_14" />
+                <el-option label="2015-07-03 15:00" value="20150403_15" />
+                <el-option label="2015-07-03 16:00" value="20150403_16" />
+                <el-option label="2015-07-03 17:00" value="20150403_17" />
+                <el-option label="2015-07-03 18:00" value="20150403_18" />
+                <el-option label="2015-07-03 19:00" value="20150403_19" />
+                <el-option label="2015-07-03 20:00" value="20150403_20" />
+                <el-option label="2015-07-03 21:00" value="20150403_21" />
+                <el-option label="2015-07-03 22:00" value="20150403_22" />
+                <el-option label="2015-07-03 23:00" value="20150403_23" />
+                <el-option label="2015-07-04 00:00" value="20150404_00" />
+                <el-option label="2015-07-04 01:00" value="20150404_01" />
+                <el-option label="2015-07-04 02:00" value="20150404_02" />
+                <el-option label="2015-07-04 03:00" value="20150404_03" />
+                <el-option label="2015-07-04 04:00" value="20150404_04" />
+                <el-option label="2015-07-04 05:00" value="20150404_05" />
+                <el-option label="2015-07-04 06:00" value="20150404_06" />
+                <el-option label="2015-07-04 07:00" value="20150404_07" />
+                <el-option label="2015-07-04 08:00" value="20150404_08" />
+                <el-option label="2015-07-04 09:00" value="20150404_09" />
+                <el-option label="2015-07-04 10:00" value="20150404_10" />
+                <el-option label="2015-07-04 11:00" value="20150404_11" />
+                <el-option label="2015-07-04 12:00" value="20150404_12" />
+                <el-option label="2015-07-04 13:00" value="20150404_13" />
+                <el-option label="2015-07-04 14:00" value="20150404_14" />
+                <el-option label="2015-07-04 15:00" value="20150404_15" />
+                <el-option label="2015-07-04 16:00" value="20150404_16" />
+                <el-option label="2015-07-04 17:00" value="20150404_17" />
+                <el-option label="2015-07-04 18:00" value="20150404_18" />
+                <el-option label="2015-07-04 19:00" value="20150404_19" />
+                <el-option label="2015-07-04 20:00" value="20150404_20" />
+                <el-option label="2015-07-04 21:00" value="20150404_21" />
+                <el-option label="2015-07-04 22:00" value="20150404_22" />
+                <el-option label="2015-07-04 23:00" value="20150404_23" />
+                <el-option label="2015-07-05 00:00" value="20150405_00" />
+                <el-option label="2015-07-05 01:00" value="20150405_01" />
+                <el-option label="2015-07-05 02:00" value="20150405_02" />
+                <el-option label="2015-07-05 03:00" value="20150405_03" />
+                <el-option label="2015-07-05 04:00" value="20150405_04" />
+                <el-option label="2015-07-05 05:00" value="20150405_05" />
+                <el-option label="2015-07-05 06:00" value="20150405_06" />
+                <el-option label="2015-07-05 07:00" value="20150405_07" />
+                <el-option label="2015-07-05 08:00" value="20150405_08" />
+                <el-option label="2015-07-05 09:00" value="20150405_09" />
+                <el-option label="2015-07-05 10:00" value="20150405_10" />
+                <el-option label="2015-07-05 11:00" value="20150405_11" />
+                <el-option label="2015-07-05 12:00" value="20150405_12" />
+                <el-option label="2015-07-05 13:00" value="20150405_13" />
+                <el-option label="2015-07-05 14:00" value="20150405_14" />
+                <el-option label="2015-07-05 15:00" value="20150405_15" />
+                <el-option label="2015-07-05 16:00" value="20150405_16" />
+                <el-option label="2015-07-05 17:00" value="20150405_17" />
+                <el-option label="2015-07-05 18:00" value="20150405_18" />
+                <el-option label="2015-07-05 19:00" value="20150405_19" />
+                <el-option label="2015-07-05 20:00" value="20150405_20" />
+                <el-option label="2015-07-05 21:00" value="20150405_21" />
+                <el-option label="2015-07-05 22:00" value="20150405_22" />
+                <el-option label="2015-07-05 23:00" value="20150405_23" />
+                <el-option label="2015-07-06 00:00" value="20150406_00" />
+                <el-option label="2015-07-06 01:00" value="20150406_01" />
+                <el-option label="2015-07-06 02:00" value="20150406_02" />
+                <el-option label="2015-07-06 03:00" value="20150406_03" />
+                <el-option label="2015-07-06 04:00" value="20150406_04" />
+                <el-option label="2015-07-06 05:00" value="20150406_05" />
+                <el-option label="2015-07-06 06:00" value="20150406_06" />
+                <el-option label="2015-07-06 07:00" value="20150406_07" />
+                <el-option label="2015-07-06 08:00" value="20150406_08" />
+                <el-option label="2015-07-06 09:00" value="20150406_09" />
+                <el-option label="2015-07-06 10:00" value="20150406_10" />
+                <el-option label="2015-07-06 11:00" value="20150406_11" />
+                <el-option label="2015-07-06 12:00" value="20150406_12" />
+                <el-option label="2015-07-06 13:00" value="20150406_13" />
+                <el-option label="2015-07-06 14:00" value="20150406_14" />
+                <el-option label="2015-07-06 15:00" value="20150406_15" />
+                <el-option label="2015-07-06 16:00" value="20150406_16" />
+                <el-option label="2015-07-06 17:00" value="20150406_17" />
+                <el-option label="2015-07-06 18:00" value="20150406_18" />
+                <el-option label="2015-07-06 19:00" value="20150406_19" />
+                <el-option label="2015-07-06 20:00" value="20150406_20" />
+                <el-option label="2015-07-06 21:00" value="20150406_21" />
+                <el-option label="2015-07-06 22:00" value="20150406_22" />
+                <el-option label="2015-07-06 23:00" value="20150406_23" />
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+              <!-- <el-button type="primary" icon="Search" @click="handleQuery">预测</el-button> -->
               <el-button icon="Refresh" @click="resetQuery">重置</el-button>
             </el-form-item>
           </el-form>
         </el-card>
       </div>
     </transition>
-
-    <el-card shadow="hover">
-      <template #header>
-        <el-row :gutter="10">
-          <el-col :span="1.5">
-            <el-button v-hasPermi="['system:dept:add']" type="primary" plain icon="Plus" @click="handleAdd()">新增 </el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain icon="Sort" @click="handleToggleExpandAll">展开/折叠</el-button>
-          </el-col>
-          <right-toolbar v-model:show-search="showSearch" @query-table="getList"></right-toolbar>
-        </el-row>
-      </template>
-
-      <el-table
-        ref="deptTableRef"
-        v-loading="loading"
-        :data="deptList"
-        row-key="deptId"
-        border
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        :default-expand-all="isExpandAll"
-      >
-        <el-table-column prop="deptName" label="部门名称" width="260"></el-table-column>
-        <el-table-column prop="deptCategory" align="center" label="类别编码" width="200"></el-table-column>
-        <el-table-column prop="orderNum" align="center" label="排序" width="200"></el-table-column>
-        <el-table-column prop="status" align="center" label="状态" width="100">
-          <template #default="scope">
-            <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
+    
+    <el-row :gutter="20" class="mt-2">
+      <el-col :span="12">
+        <el-card shadow="hover" class="bg-light-blue-50">
+          <template #header>
+            <div class="font-medium">各个区域未来时间的流入量热力图</div>
           </template>
-        </el-table-column>
-        <el-table-column label="创建时间" align="center" prop="createTime" width="200">
-          <template #default="scope">
-            <span>{{ proxy.parseTime(scope.row.createTime) }}</span>
+          <div class="h-150 bg-white rounded flex items-center justify-center p-2">
+            <!-- <img src="/src/assets/images/TDRIVE_inflow_2015-02-25T07-00-00Z.svg" alt="流入量热力图" class="max-w-full max-h-full object-contain"> -->
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card shadow="hover" class="bg-light-blue-50">
+          <template #header>
+            <div class="font-medium">各个区域未来时间的流出量热力图</div>
           </template>
-        </el-table-column>
-        <el-table-column fixed="right" align="center" label="操作">
-          <template #default="scope">
-            <el-tooltip content="修改" placement="top">
-              <el-button v-hasPermi="['system:dept:edit']" link type="primary" icon="Edit" @click="handleUpdate(scope.row)" />
-            </el-tooltip>
-            <el-tooltip content="新增" placement="top">
-              <el-button v-hasPermi="['system:dept:add']" link type="primary" icon="Plus" @click="handleAdd(scope.row)" />
-            </el-tooltip>
-            <el-tooltip content="删除" placement="top">
-              <el-button v-hasPermi="['system:dept:remove']" link type="primary" icon="Delete" @click="handleDelete(scope.row)" />
-            </el-tooltip>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
+          <div class="h-150 bg-white rounded flex items-center justify-center p-2">
+            <!-- <img src="/src/assets/images/TDRIVE_outflow_2015-02-25T07-00-00Z.svg" alt="流出量热力图" class="max-w-full max-h-full object-contain"> -->
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
 
     <el-dialog v-model="dialog.visible" :title="dialog.title" destroy-on-close append-to-body width="600px">
       <el-form ref="deptFormRef" :model="form" :rules="rules" label-width="80px">

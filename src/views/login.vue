@@ -2,15 +2,18 @@
   <div class="login">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
       <div class="title-box">
-        <h3 class="title">{{ title }}</h3>
+        <h3 class="title">区域出入流预测系统</h3>
         <lang-select />
+        <p class="text-cyan-300 flex items-center justify-center gap-2">
+        </p>
       </div>
-      <el-form-item v-if="tenantEnabled" prop="tenantId">
+  
+      <!-- <el-form-item v-if="tenantEnabled" prop="tenantId">
         <el-select v-model="loginForm.tenantId" filterable :placeholder="proxy.$t('login.selectPlaceholder')" style="width: 100%">
           <el-option v-for="item in tenantList" :key="item.tenantId" :label="item.companyName" :value="item.tenantId"></el-option>
           <template #prefix><svg-icon icon-class="company" class="el-input__icon input-icon" /></template>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" size="large" auto-complete="off" :placeholder="proxy.$t('login.username')">
           <template #prefix><svg-icon icon-class="user" class="el-input__icon input-icon" /></template>
@@ -44,7 +47,7 @@
         </div>
       </el-form-item>
       <el-checkbox v-model="loginForm.rememberMe" style="margin: 0 0 25px 0">{{ proxy.$t('login.rememberPassword') }}</el-checkbox>
-      <el-form-item style="float: right">
+      <!-- <el-form-item style="float: right">
         <el-button circle :title="proxy.$t('login.social.wechat')" @click="doSocialLogin('wechat')">
           <svg-icon icon-class="wechat" />
         </el-button>
@@ -60,7 +63,7 @@
         <el-button circle :title="proxy.$t('login.social.github')" @click="doSocialLogin('github')">
           <svg-icon icon-class="github" />
         </el-button>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item style="width: 100%">
         <el-button :loading="loading" size="large" type="primary" style="width: 100%" @click.prevent="handleLogin">
           <span v-if="!loading">{{ proxy.$t('login.login') }}</span>
@@ -73,7 +76,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2026 疯狂的狮子Li All Rights Reserved.</span>
+      <span>Copyright © 2026 智慧城市解决方案</span>
     </div>
   </div>
 </template>
@@ -118,11 +121,70 @@ const captchaEnabled = ref(true);
 const tenantEnabled = ref(true);
 
 // 注册开关
-const register = ref(false);
+const register = ref(true);
 const redirect = ref('/');
 const loginRef = ref<ElFormInstance>();
 // 租户列表
 const tenantList = ref<TenantVO[]>([]);
+
+const captchaAnswer = ref(''); // 正确答案（仅前端内存，用于比对）
+
+function randomText(len = 4) {
+  const chars = '23456789ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz';
+  let s = '';
+  for (let i = 0; i < len; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  return s;
+}
+
+function rand(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateCaptcha() {
+  const text = randomText(4);
+  captchaAnswer.value = text;
+
+  const w = 120, h = 40;
+  const canvas = document.createElement('canvas');
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  // 背景
+  ctx.fillStyle = `rgb(${rand(230,255)},${rand(230,255)},${rand(230,255)})`;
+  ctx.fillRect(0, 0, w, h);
+
+  // 干扰线
+  for (let i = 0; i < 4; i++) {
+    ctx.strokeStyle = `rgb(${rand(80,200)},${rand(80,200)},${rand(80,200)})`;
+    ctx.beginPath();
+    ctx.moveTo(rand(0, w), rand(0, h));
+    ctx.lineTo(rand(0, w), rand(0, h));
+    ctx.stroke();
+  }
+
+  // 文本
+  ctx.font = 'bold 22px Arial';
+  ctx.textBaseline = 'middle';
+  const gap = w / (text.length + 1);
+
+  for (let i = 0; i < text.length; i++) {
+    const x = gap * (i + 1);
+    const y = h / 2 + rand(-4, 4);
+    const angle = (rand(-20, 20) * Math.PI) / 180;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.fillStyle = `rgb(${rand(0,120)},${rand(0,120)},${rand(0,120)})`;
+    ctx.fillText(text[i], -6, 0);
+    ctx.restore();
+  }
+
+  codeUrl.value = canvas.toDataURL('image/png'); // ✅ 关键：这里生成 dataURL
+}
+
 
 watch(
   () => router.currentRoute.value,
@@ -178,7 +240,7 @@ const getCode = async () => {
   if (captchaEnabled.value) {
     // 刷新验证码时清空输入框
     loginForm.value.code = '';
-    codeUrl.value = 'data:image/gif;base64,' + data.img;
+    generateCaptcha();
     loginForm.value.uuid = data.uuid;
   }
 };
@@ -225,8 +287,10 @@ const doSocialLogin = (type: string) => {
   });
 };
 
-onMounted(() => {
-  getCode();
+import { onMounted } from 'vue';
+
+onMounted(async () => {
+  await getCode();
   initTenantList();
   getLoginData();
 });

@@ -5,6 +5,40 @@ import { AxiosPromise } from 'axios';
 import { UserForm, UserQuery, UserVO, UserInfoVO } from './types';
 import { parseStrEmpty } from '@/utils/ruoyi';
 
+// 模拟用户数据
+const mockUserList: UserVO[] = [
+  {
+    userId: 1,
+    deptId: 1,
+    userName: '张三',
+    nickName: '张三',
+    email: 'zhangsan@example.com',
+    phonenumber: '13800138001',
+    status: '0',
+    createTime: '2024-01-01 00:00:00'
+  },
+  {
+    userId: 2,
+    deptId: 2,
+    userName: '李四',
+    nickName: '李四',
+    email: 'lisi@example.com',
+    phonenumber: '13800138002',
+    status: '0',
+    createTime: '2024-01-01 00:00:00'
+  },
+  {
+    userId: 3,
+    deptId: 3,
+    userName: '王五',
+    nickName: '王五',
+    email: 'wangwu@example.com',
+    phonenumber: '13800138003',
+    status: '0',
+    createTime: '2024-01-01 00:00:00'
+  }
+];
+
 /**
  * 查询用户列表
  * @param query
@@ -193,9 +227,11 @@ export const updateAuthRole = (data: { userId: string; roleIds: string }) => {
  * @param deptId
  */
 export const listUserByDeptId = (deptId: string | number): AxiosPromise<UserVO[]> => {
-  return request({
-    url: '/system/user/list/dept/' + deptId,
-    method: 'get'
+  // 模拟接口返回
+  return Promise.resolve({
+    code: 200,
+    data: mockUserList.filter(item => item.deptId === deptId),
+    msg: 'success'
   });
 };
 

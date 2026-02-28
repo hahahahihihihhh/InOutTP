@@ -67,13 +67,15 @@ export function logout() {
  * 获取验证码
  */
 export function getCodeImg(): AxiosPromise<VerifyCodeResult> {
-  return request({
-    url: '/auth/code',
-    headers: {
-      isToken: false
+  // 返回 mock 数据
+  return Promise.resolve({
+    code: 200,
+    data: {
+      captchaEnabled: true,
+      img: 'R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
+      uuid: 'mock-uuid-' + Math.random().toString(36).substr(2, 9)
     },
-    method: 'get',
-    timeout: 20000
+    msg: 'success'
   });
 }
 
@@ -103,11 +105,20 @@ export function getInfo(): AxiosPromise<UserInfo> {
 
 // 获取租户列表
 export function getTenantList(isToken: boolean): AxiosPromise<TenantInfo> {
-  return request({
-    url: '/auth/tenant/list',
-    headers: {
-      isToken: isToken
+  // 返回 mock 数据
+  return Promise.resolve({
+    code: 200,
+    data: {
+      tenantEnabled: true,
+      voList: [
+        {
+          tenantId: '1',
+          companyName: '默认租户',
+          tenantName: 'default',
+          status: '0'
+        }
+      ]
     },
-    method: 'get'
+    msg: 'success'
   });
 }

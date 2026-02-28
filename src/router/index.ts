@@ -88,6 +88,27 @@ export const constantRoutes: RouteRecordRaw[] = [
         meta: { title: '个人中心', icon: 'user' }
       }
     ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/dept',
+    name: 'System',
+    meta: { title: '系统管理', icon: 'system' },
+    children: [
+      {
+        path: 'dept',
+        component: () => import('@/views/system/dept/index.vue'),
+        name: 'Dept',
+        meta: { title: '可视化展示', icon: 'tree' }
+      },
+      {
+        path: 'model',
+        component: () => import('@/views/system/model/index.vue'),
+        name: 'Model',
+        meta: { title: '模型管理', icon: 'model' }
+      }
+    ]
   }
 ];
 
